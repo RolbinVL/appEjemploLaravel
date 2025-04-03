@@ -5,21 +5,21 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// Determine if the application is in maintenance mode...
+// Determinar si la aplicación está en modo de mantenimiento...
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
-// Register the Composer autoloader...
+// Registrar el cargador de clases de Composer...
 require __DIR__.'/../vendor/autoload.php';
 
-// Bootstrap Laravel and handle the request...
+// Inicializar Laravel y manejar la solicitud...
 /** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-// Handle the request and send the response
+// Manejar la solicitud y enviar la respuesta
 $response = $app->handle(Request::capture());
 $response->send();
 
-// Terminate the request and response lifecycle
-$app->terminate($request, $response);
+// Terminar el ciclo de vida de la solicitud y la respuesta
+$app->terminate(Request::capture(), $response);
